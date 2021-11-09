@@ -1,0 +1,25 @@
+table,
+th,
+td {
+  border: 1px solid #cfe2f3;
+}
+
+.col1 {
+  width: 337px;
+}
+
+.col2 {
+  width: 331px;
+}
+
+.col3 {
+  width: 76px;
+}
+
+.col4 {
+  width: 203px;
+}
+
+.col5 {
+  width: 278px;
+}

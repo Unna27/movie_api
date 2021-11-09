@@ -1,8 +1,8 @@
-// array to store movie names
+// array to store movie titles
 module.exports.bestMovies = () => {
   const movies = [
     {
-      name: "F9",
+      title: "F9",
       releaseDate: "June 25, 2021",
       language: "English",
       cast: [
@@ -16,7 +16,7 @@ module.exports.bestMovies = () => {
       runtime: "2h 25m"
     },
     {
-      name: "Palmer",
+      title: "Palmer",
       releaseDate: "Jan 29, 2021",
       language: "English",
       cast: [
@@ -30,7 +30,7 @@ module.exports.bestMovies = () => {
       runtime: "1h 51m"
     },
     {
-      name: "In the Heights",
+      title: "In the Heights",
       releaseDate: "June 10, 2021",
       language: "English",
       cast: ["Anthony Ramos", "Corey Hawkins. Leslie Grace", "Melissa Barrera"],
@@ -39,7 +39,7 @@ module.exports.bestMovies = () => {
       runtime: "2h 23m"
     },
     {
-      name: "Nobody",
+      title: "Nobody",
       releaseDate: "March 26, 2021",
       language: "English",
       cast: ["Bob Odenkirk", "Connie Nielsen", "RZA", "Aleksei Serebryakov"],
@@ -48,7 +48,7 @@ module.exports.bestMovies = () => {
       runtime: "1h 32m"
     },
     {
-      name: "Night of the Kings",
+      title: "Night of the Kings",
       releaseDate: "February 26, 2021",
       language: "French",
       cast: ["Bakary Koné", "Issaka Sawadogo", "Steve Tientcheu"],
@@ -57,7 +57,7 @@ module.exports.bestMovies = () => {
       runtime: "1h 33m"
     },
     {
-      name: "No Sudden Move",
+      title: "No Sudden Move",
       releaseDate: "July 1, 2021",
       language: "English",
       cast: ["Don Cheadle", "Benicio Del Toro", "David Harbour", "Jon Hamm"],
@@ -66,7 +66,7 @@ module.exports.bestMovies = () => {
       runtime: "1h 30m"
     },
     {
-      name: "Stowaway",
+      title: "Stowaway",
       releaseDate: "Apr 22, 2021",
       language: "English",
       cast: [
@@ -80,7 +80,7 @@ module.exports.bestMovies = () => {
       runtime: "1h 56m"
     },
     {
-      name: "Riders of Justice",
+      title: "Riders of Justice",
       releaseDate: "May 14, 2021",
       language: "Danish",
       cast: [
@@ -94,7 +94,7 @@ module.exports.bestMovies = () => {
       runtime: "1h 56m"
     },
     {
-      name: "Percy vs Goliath",
+      title: "Percy vs Goliath",
       releaseDate: "April 30, 2021",
       language: "English",
       cast: ["Peter Stebbings"],
@@ -103,7 +103,7 @@ module.exports.bestMovies = () => {
       runtime: "1h 40m"
     },
     {
-      name: "My Salinger Year",
+      title: "My Salinger Year",
       releaseDate: "March 5, 2021",
       language: "English",
       cast: [

@@ -2,7 +2,9 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>Movie_API Documentation</title>
+    <link href="css/style.css" rel="stylesheet" />
   </head>
   <body>
     <h1>Documentation</h1>
@@ -12,5 +14,125 @@
       movies, directors, and genres. Users will be able to sign up, update their
       personal information, and create a list of their favorite movies.
     </p>
+    <table>
+      <tbody>
+        <tr>
+          <th class="col1"><strong>Request</strong></th>
+          <th class="col2"><strong>URL</strong></th>
+          <th class="col3"><strong>HTTP Method</strong></th>
+          <th class="col4"><strong>Request body data format</strong></th>
+          <th class="col5"><strong>Response body data format</strong></th>
+        </tr>
+        <tr>
+          <td class="col1">Return a list of ALL movies to the user</td>
+          <td class="col2">/movies</td>
+          <td class="col3">GET</td>
+          <td class="col4">None</td>
+          <td class="col5">A JSON Object holding data about all the movies</td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Return data about a single movie by title to the user
+          </td>
+          <td class="col2">/movies[Title]</td>
+          <td class="col3">GET</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A JSON Object holding data about a single movie, containing title,
+            releaseDate, language, etc..is returned.<br />{ "title": "F9",<br />
+            "releaseDate": "June 25, 2021",<br />
+            "language": "English",<br />
+            }
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Return data about a genre (description) by movie title&nbsp;
+          </td>
+          <td class="col2">/movies[Title]/genre</td>
+          <td class="col3">GET</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A text message indicating general description of the movie. (e.g.,
+            &ldquo;Thriller&rdquo;)
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">Return data about a director by name</td>
+          <td class="col2">/directors[Name]</td>
+          <td class="col3">GET</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A JSON Object holding data about a director, containing (bio, birth
+            year, death year
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">Allow new users to register</td>
+          <td class="col2">/users</td>
+          <td class="col3">POST</td>
+          <td class="col4">
+            A JSON object holding data about the user to add, structured
+            like:<br />{ "name": "User1",<br />
+            "email": "user1@xyz.com",<br />
+            "movies_List": ["F9", "Palmer"]<br />
+            }
+          </td>
+          <td class="col5">
+            A JSON object holding data about the user that was added, including
+            an ID: <br />{ "id": 1,<br />
+            "name": "User1",<br />
+            "email": "user1@xyz.com",<br />
+            "movies_List": ["F9", "Palmer"]<br />
+            }
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">Allow users to update their user info (username)</td>
+          <td class="col2">/users/[Name]/[Email]</td>
+          <td class="col3">PUT</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A text message indicating the user that email was updated.
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Allow users to add a movie to their list of favorites&nbsp;
+          </td>
+          <td class="col2">/users/[Name]/[MovieTitle]</td>
+          <td class="col3">POST</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A text message indicating the favorite movie has been added to the
+            list.
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Allow users to remove a movie from their list of favorites&nbsp;
+          </td>
+          <td class="col2">/users/[Name]/[MovieTitle]</td>
+          <td class="col3">DELETE</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A text message indicating the favorite movie has been removed from
+            the list.
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Allow existing users to deregister (showing only a text that a user
+            email has been removed&mdash;more on this later)
+          </td>
+          <td class="col2">/users[ID]</td>
+          <td class="col3">DELETE</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A text message indicating whether the user details has been removed.
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>

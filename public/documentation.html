@@ -34,7 +34,7 @@
           <td class="col1">
             Return data about a single movie by title to the user
           </td>
-          <td class="col2">/movies[Title]</td>
+          <td class="col2">/movies[title]</td>
           <td class="col3">GET</td>
           <td class="col4">None</td>
           <td class="col5">
@@ -49,7 +49,7 @@
           <td class="col1">
             Return data about a genre (description) by movie title&nbsp;
           </td>
-          <td class="col2">/movies[Title]/genre</td>
+          <td class="col2">/movies[title]/genre</td>
           <td class="col3">GET</td>
           <td class="col4">None</td>
           <td class="col5">
@@ -59,12 +59,18 @@
         </tr>
         <tr>
           <td class="col1">Return data about a director by name</td>
-          <td class="col2">/directors[Name]</td>
+          <td class="col2">/directors[name]</td>
           <td class="col3">GET</td>
           <td class="col4">None</td>
           <td class="col5">
             A JSON Object holding data about a director, containing (bio, birth
-            year, death year
+            year, death year: <br />
+            { "name": "Justin Lin",<br />
+            "bio": "Justin Lin is a Taiwanese-born American director, producer,
+            and screenwriter.",<br />
+            "birthDate": "1971-10-11",<br />
+            "deathDate": null<br />
+            }
           </td>
         </tr>
         <tr>
@@ -73,34 +79,43 @@
           <td class="col3">POST</td>
           <td class="col4">
             A JSON object holding data about the user to add, structured
-            like:<br />{ "name": "User1",<br />
+            like:<br />{ "username": "User1",<br />
+            "password": "pwd_user1",<br />
             "email": "user1@xyz.com",<br />
-            "movies_List": ["F9", "Palmer"]<br />
+            "birthDate": "1990-07-29",<br />
             }
           </td>
           <td class="col5">
             A JSON object holding data about the user that was added, including
-            an ID: <br />{ "id": 1,<br />
-            "name": "User1",<br />
+            an ID: <br />{ "_id": 1,<br />
+            "username": "User1",<br />
+            "password": "pwd_user1",<br />
             "email": "user1@xyz.com",<br />
-            "movies_List": ["F9", "Palmer"]<br />
+            "birthDate": "1990-07-29",<br />
             }
           </td>
         </tr>
         <tr>
           <td class="col1">Allow users to update their user info (username)</td>
-          <td class="col2">/users/[Name]/[Email]</td>
+          <td class="col2">/users/[username]</td>
           <td class="col3">PUT</td>
-          <td class="col4">None</td>
+          <td class="col4">
+            { <br />
+            "username": "User1",<br />
+            "password": "pwd_user1",<br />
+            "email": "user1@gmail.com",<br />
+            "birthDate": "1990-07-29",<br />
+            }
+          </td>
           <td class="col5">
-            A text message indicating the user that email was updated.
+            A text message indicating the user details has been updated.
           </td>
         </tr>
         <tr>
           <td class="col1">
             Allow users to add a movie to their list of favorites&nbsp;
           </td>
-          <td class="col2">/users/[Name]/[MovieTitle]</td>
+          <td class="col2">/users/[username]/movies/[movieId]</td>
           <td class="col3">POST</td>
           <td class="col4">None</td>
           <td class="col5">
@@ -112,7 +127,7 @@
           <td class="col1">
             Allow users to remove a movie from their list of favorites&nbsp;
           </td>
-          <td class="col2">/users/[Name]/[MovieTitle]</td>
+          <td class="col2">/users/[username]/movies/[movieId]</td>
           <td class="col3">DELETE</td>
           <td class="col4">None</td>
           <td class="col5">
@@ -125,7 +140,7 @@
             Allow existing users to deregister (showing only a text that a user
             email has been removed&mdash;more on this later)
           </td>
-          <td class="col2">/users[ID]</td>
+          <td class="col2">/users[username]</td>
           <td class="col3">DELETE</td>
           <td class="col4">None</td>
           <td class="col5">

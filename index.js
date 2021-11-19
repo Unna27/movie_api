@@ -20,7 +20,19 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 
 // use morgan framework to use logging function
 app.use(morgan('common'));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); //  looks at requests where the Content-Type: application/json header is present and transforms the text-based JSON input into JS-accessible variables under req.body.
+app.use(bodyParser.urlencoded({ extended: true })); // Looks at URL encoded requests and does the same as above. extended: true mentions req.body obj contains any values instead of just strings.
+
+// import auth.js
+let auth = require('./auth');
+
+// import passport module and passport.js file
+const passport = require('passport');
+require('./passport');
+
+app.use(passport.initialize()); // reqd for req.login function in auth.js to work
+auth(app); // (app) arg ensures, express is available in auth.js as well
+
 //serve static files in public folder
 app.use(express.static('public'));
 
@@ -37,16 +49,20 @@ root: __dirname
 });
 */
 // request to return a list of all movies
-app.get('/movies', (req, res) => {
-  Movies.find()
-    .then(movies => {
-      res.json(movies);
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).send('Error: ' + error);
-    });
-});
+app.get(
+  '/movies',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Movies.find()
+      .then(movies => {
+        res.json(movies);
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).send('Error: ' + error);
+      });
+  }
+);
 
 // request to return details of a single movie by its title
 app.get('/movies/:title', (req, res) => {
@@ -68,7 +84,7 @@ app.get('/movies/:title/genre', (req, res) => {
         console.log(req.params.title + ' movie found');
         //let genre = Object.values(movie.genres); //Object.values() filters out object's keys and keeps the values alone returned as a new array
         res
-          .status(201)
+          .status(200)
           .send(
             'General Description of the movie ' +
               req.params.title +
@@ -161,7 +177,7 @@ app.put('/users/:username', (req, res) => {
   )
     .then(updatedUser => {
       console.log(updatedUser);
-      res.status(201).send('User details has been updated.');
+      res.status(200).send('User details has been updated.');
     })
     .catch(error => {
       console.log(error);
@@ -183,7 +199,7 @@ app.post('/users/:username/movies/:movieId', (req, res) => {
     .then(updatedUser => {
       console.log(updatedUser);
       res
-        .status(201)
+        .status(200)
         .send('Favorite movie has been added to the favoritemovieslist.');
     })
     .catch(error => {
@@ -206,7 +222,7 @@ app.delete('/users/:username/movies/:movieId', (req, res) => {
     .then(updatedUser => {
       console.log(updatedUser);
       res
-        .status(201)
+        .status(200)
         .send('Favorite movie has been removed from the favoritemovieslist.');
     })
     .catch(error => {
@@ -220,7 +236,7 @@ app.delete('/users/:username', (req, res) => {
   Users.findOneAndRemove({ username: req.params.username })
     .then(user => {
       if (!user) {
-        res.status(400).send(req.params.username + ' was not found.');
+        res.status(404).send(req.params.username + ' was not found.');
       } else {
         res.status(200).send(req.params.username + ' was deleted.');
       }

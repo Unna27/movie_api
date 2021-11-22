@@ -19,12 +19,18 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-// Connect to Mongodb
+// Connect to Mongodb local
+/*
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-
+*/
+// Connect to Mongodb ATLAS URI configured in env var in Heroku
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 // use morgan framework to use logging function
 app.use(morgan('common'));
 app.use(bodyParser.json()); //  looks at requests where the Content-Type: application/json header is present and transforms the text-based JSON input into JS-accessible variables under req.body.

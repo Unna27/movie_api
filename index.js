@@ -1,3 +1,5 @@
+const port = process.env.port || 8080;
+
 // load express and morgan framework
 const express = require('express'),
   morgan = require('morgan'),
@@ -10,7 +12,7 @@ const express = require('express'),
 const app = express();
 
 // define allowedOrigins list
-const allowedOrigins = ['http://localhost:8080'];
+//const allowedOrigins = ['http://localhost:8080'];
 
 // load ModelsScheme
 const Models = require('./models.js');
@@ -35,6 +37,7 @@ require('./passport');
 app.use(passport.initialize()); // reqd for req.login function in auth.js to work
 
 // use cross origin support
+/*
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -50,6 +53,8 @@ app.use(
     }
   })
 );
+*/
+app.use(cors()); // by default allows all origins
 
 // import auth.js
 let auth = require('./auth')(app);
@@ -351,7 +356,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong!');
 });
 
-// make the app listen at port 8080
-app.listen(8080, () => {
-  console.log('Movie_API app listening on port 8080.');
+// make the app listen at the env port variable or default 8080
+app.listen(port, '0.0.0.0', () => {
+  console.log('Movie_API app listening on port ' + port);
 });

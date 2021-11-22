@@ -3,9 +3,13 @@ const express = require('express'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
   uuid = require('uuid'), // for unique identification number generation
-  mongoose = require('mongoose');
+  mongoose = require('mongoose'),
+  cors = require('cors');
 
 const app = express();
+
+// define allowedOrigins list
+const allowedOrigins = ['http://localhost:8080'];
 
 // load ModelsScheme
 const Models = require('./models.js');
@@ -28,6 +32,23 @@ const passport = require('passport');
 require('./passport');
 
 app.use(passport.initialize()); // reqd for req.login function in auth.js to work
+
+// use cross origin support
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        // If a specific origin isn’t found on the list of allowed origins
+        let message =
+          'The CORS policy for this application doesn’t allow access from origin ' +
+          origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    }
+  })
+);
 
 // import auth.js
 let auth = require('./auth')(app);
@@ -139,6 +160,7 @@ app.get(
 
 // request to add a new user
 app.post('/users', (req, res) => {
+  let hashedPassword = Users.hashPassword(req.body.password); // calls hashPwd method in models.js
   if (!req.body.username | !req.body.password | !req.body.email) {
     const message =
       'Missing input paramaeter arguments(name/ password/ email) in request body';
@@ -151,7 +173,7 @@ app.post('/users', (req, res) => {
         } else {
           Users.create({
             username: req.body.username,
-            password: req.body.password,
+            password: hashedPassword,
             email: req.body.email,
             birthdate: req.body.birthdate
           })

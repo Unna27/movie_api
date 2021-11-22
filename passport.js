@@ -23,12 +23,18 @@ passport.use(
       Users.findOne({ username: username })
         .then(user => {
           if (!user) {
-            console.log('incorrect username');
+            console.log('Incorrect username');
             return callback(null, false, {
-              message: 'Incorrect username or password.'
+              message: 'Incorrect username.'
             });
           }
-          console.log('Logged in successfully. in local');
+          if (!user.validatePassword(password)) {
+            console.log('Incorrect password.');
+            return callback(null, false, {
+              message: 'Incorrect password.'
+            });
+          }
+          console.log('Logged in successfully.');
           console.log(user + ' in local');
           return callback(null, user, { message: 'Logged in successfully' });
         })

@@ -25,13 +25,13 @@ module.exports = router => {
       if (error) {
         console.log('error.');
         return res.status(400).json({
-          message: 'Something is not right.' + info
+          message: 'Something is not right. ' + info.message
         });
       }
       if (!user) {
-        console.log('User not found.');
+        console.log('User or password not correct.');
         return res.status(400).json({
-          message: 'User not found.' + info,
+          message: 'User details not correct - ' + info.message,
           user: user
         });
       }

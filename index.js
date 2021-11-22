@@ -4,7 +4,8 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   uuid = require('uuid'), // for unique identification number generation
   mongoose = require('mongoose'),
-  cors = require('cors');
+  cors = require('cors'),
+  { check, validationResult } = require('express-validator'); // for validating input parameters
 
 const app = express();
 
@@ -159,46 +160,94 @@ app.get(
 );
 
 // request to add a new user
-app.post('/users', (req, res) => {
-  let hashedPassword = Users.hashPassword(req.body.password); // calls hashPwd method in models.js
-  if (!req.body.username | !req.body.password | !req.body.email) {
-    const message =
-      'Missing input paramaeter arguments(name/ password/ email) in request body';
-    res.status(400).send(message);
-  } else {
-    Users.findOne({ username: req.body.username })
-      .then(user => {
-        if (user) {
-          res.status(400).send(req.body.username + ' already exists');
-        } else {
-          Users.create({
-            username: req.body.username,
-            password: hashedPassword,
-            email: req.body.email,
-            birthdate: req.body.birthdate
-          })
-            .then(user => {
-              res.status(201).json(user);
+app.post(
+  '/users',
+  [
+    check('username', 'Username is required - minimum length: 5.').isLength({
+      min: 5
+    }),
+    check(
+      'username',
+      'Username contains non-alpha numeric characters - not allowed.'
+    ).isAlphanumeric(),
+    check('password', 'Passowrd is required.')
+      .not()
+      .isEmpty(),
+    check('email', 'E-mail does not appear to be valid').isEmail(),
+    check('birthdate', 'Date of Birth must be a valid date.').isDate()
+  ],
+  (req, res) => {
+    // check validationResult obj for any errors
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashedPassword = Users.hashPassword(req.body.password); // calls hashPwd method in models.js
+    if (!req.body.username | !req.body.password | !req.body.email) {
+      const message =
+        'Missing input paramaeter arguments(name/ password/ email) in request body';
+      res.status(400).send(message);
+    } else {
+      Users.findOne({ username: req.body.username })
+        .then(user => {
+          if (user) {
+            res.status(400).send(req.body.username + ' already exists');
+          } else {
+            Users.create({
+              username: req.body.username,
+              password: hashedPassword,
+              email: req.body.email,
+              birthdate: req.body.birthdate
             })
-            .catch(error => {
-              console.log(error);
-              res.status(500).send('Error: ' + error);
-            });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-        res.status(500).send('Error: ' + error);
-      });
-    //newUser.id = uuid.v4();
+              .then(user => {
+                res.status(201).json(user);
+              })
+              .catch(error => {
+                console.log(error);
+                res.status(500).send('Error: ' + error);
+              });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          res.status(500).send('Error: ' + error);
+        });
+      //newUser.id = uuid.v4();
+    }
   }
-});
+);
 
 // request to update details of the user
 app.put(
   '/users/:username',
+  [
+    check('username', 'Username is required - minimum length: 5.').isLength({
+      min: 5
+    }),
+    check(
+      'username',
+      'Username contains non-alpha numeric characters - not allowed.'
+    ).isAlphanumeric(),
+    check('password', 'Passowrd is required.')
+      .not()
+      .isEmpty()
+      .optional({ nullable: true }), // checks only if this argument has value
+    check('email', 'E-mail does not appear to be valid')
+      .isEmail()
+      .optional({ nullable: true }),
+    check('birthdate', 'Date of Birth must be a valid date.')
+      .isDate()
+      .optional({ nullable: true })
+  ],
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    // check validationResult obj for any errors
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
     Users.findOneAndUpdate(
       { username: req.params.username },
       {

@@ -1,4 +1,4 @@
-const port = process.env.port || 8080;
+const port = process.env.PORT || 8080;
 
 // load express and morgan framework
 const express = require('express'),
@@ -26,11 +26,14 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useUnifiedTopology: true
 });
 */
-// Connect to Mongodb ATLAS URI configured in env var in Heroku
-mongoose.connect(process.env.CONNECTION_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// Connect to Mongodb ATLAS URI configured in env var in Heroku process.env.CONNECTION_URI
+mongoose.connect(
+  'mongodb+srv://myFlixDBadmin:flixadmin123@cluster0.aaord.mongodb.net/myFlixDB?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+);
 // use morgan framework to use logging function
 app.use(morgan('common'));
 app.use(bodyParser.json()); //  looks at requests where the Content-Type: application/json header is present and transforms the text-based JSON input into JS-accessible variables under req.body.

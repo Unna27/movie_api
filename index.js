@@ -15,7 +15,7 @@ const app = express();
 //const allowedOrigins = ['http://localhost:8080'];
 
 // load ModelsScheme
-const Models = require('./models.js');
+const Models = require('./js/models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
@@ -26,11 +26,13 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useUnifiedTopology: true
 });
 */
-// Connect to Mongodb ATLAS URI configured in env var in Heroku process.env.CONNECTION_URI
+
+// Connect to Mongodb ATLAS URI configured in env var in Heroku CONNECTION_URI
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
 // use morgan framework to use logging function
 app.use(morgan('common'));
 app.use(bodyParser.json()); //  looks at requests where the Content-Type: application/json header is present and transforms the text-based JSON input into JS-accessible variables under req.body.
@@ -38,7 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Looks at URL encoded requ
 
 // import passport module and passport.js file
 const passport = require('passport');
-require('./passport');
+require('./js/passport');
 
 app.use(passport.initialize()); // reqd for req.login function in auth.js to work
 
@@ -63,7 +65,7 @@ app.use(
 app.use(cors()); // by default allows all origins
 
 // import auth.js
-let auth = require('./auth')(app);
+let auth = require('./js/auth')(app);
 
 //serve static files in public folder
 app.use(express.static('public'));

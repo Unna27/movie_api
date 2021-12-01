@@ -3,11 +3,10 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import validator from 'express-validator';
 import { port, mongodb_uri } from './config/config.js'; // import dbconfig variables
 import passport from 'passport'; // import passport module
 import './js/passport.js'; // import passport.js file
-import { authCheck } from './js/auth.js'; // import auth.js
+import { authCheck } from './routers/auth.js'; // import auth.js
 import { user_Router } from './routers/users.js'; // import users route
 import { movie_Router } from './routers/movies.js'; // import movies route
 import { director_Router } from './routers/directors.js'; // import directors route

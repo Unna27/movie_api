@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import './passport.js';
+import '../js/passport.js';
 
 // to authenticate registered users and generate jwt for user
 const jwtSecret = 'myflix_jwt_secret';
@@ -14,7 +14,7 @@ let generateJWTToken = user => {
   });
 };
 
-// POST login
+// POST login implemeted with customecallback function
 export const authCheck = router => {
   router.post('/login', (req, res) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {

@@ -1,11 +1,10 @@
-const passport = require('passport'),
-  LocalStrategy = require('passport-local').Strategy,
-  Models = require('./models.js'),
-  passportJWT = require('passport-jwt');
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import passportJWT from 'passport-jwt';
+import { User } from '../models/user.js';
 
-let Users = Models.User,
-  JWTStrategy = passportJWT.Strategy,
-  ExtractJWT = passportJWT.ExtractJwt;
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 // define LocalStrategy for HTTP authentication
 // set the username and passwordfield. the function takes 3 args(username and password from API req URL)
@@ -19,8 +18,8 @@ passport.use(
     },
     (username, password, callback) => {
       console.log(username + '-' + password);
-      // check in Mongo db users collection
-      Users.findOne({ username: username })
+      // check in Mongo db User collection
+      User.findOne({ username: username })
         .then(user => {
           if (!user) {
             console.log('Incorrect username');
@@ -35,7 +34,7 @@ passport.use(
             });
           }
           console.log('Logged in successfully.');
-          console.log(user + ' in local');
+          console.log(user + ' in local starategy');
           return callback(null, user, { message: 'Logged in successfully' });
         })
         .catch(error => {
@@ -55,13 +54,13 @@ passport.use(
       secretOrKey: 'myflix_jwt_secret'
     },
     (jwtPayload, callback) => {
-      Users.findById(jwtPayload._id)
+      User.findById(jwtPayload._id)
         .then(user => {
-          console.log('user authenticated');
+          console.log('user authenticated' + user);
           return callback(null, user);
         })
         .catch(error => {
-          consol.log('user not authenticated' + error);
+          console.log('user not authenticated' + error);
           return callback(error);
         });
     }

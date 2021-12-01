@@ -1,13 +1,11 @@
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
+import './passport.js';
+
 // to authenticate registered users and generate jwt for user
 const jwtSecret = 'myflix_jwt_secret';
 
-const jwt = require('jsonwebtoken'),
-  passport = require('passport');
-
-require('./passport');
-
 // code to generate token
-
 let generateJWTToken = user => {
   return jwt.sign(user, jwtSecret, {
     subject: user.username, // username that is encoded in JWT
@@ -17,8 +15,7 @@ let generateJWTToken = user => {
 };
 
 // POST login
-
-module.exports = router => {
+export const authCheck = router => {
   router.post('/login', (req, res) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {
       // triggers Localstrategy in passport.js and the callback fn gets 3 values (error, user obj, message)

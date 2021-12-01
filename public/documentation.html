@@ -12,7 +12,10 @@
       To build the server-side component of a “movies” web application. The web
       application will provide users with access to information about different
       movies, directors, and genres. Users will be able to sign up, update their
-      personal information, and create a list of their favorite movies.
+      personal information, and create a list of their favorite movies. This is
+      a secure API and hence for every request in the API, except for user
+      registration and login, we need to provide an auathorization bearer token
+      (received after logging) while sending a request in Postman.
     </p>
     <table>
       <tbody>
@@ -22,6 +25,43 @@
           <th class="col3"><strong>HTTP Method</strong></th>
           <th class="col4"><strong>Request body data format</strong></th>
           <th class="col5"><strong>Response body data format</strong></th>
+        </tr>
+        <tr>
+          <td class="col1">Allow users to login</td>
+          <td class="col2">/login</td>
+          <td class="col3">POST</td>
+          <td class="col4">
+            In Query Params, provide valid username and password
+          </td>
+          <td class="col5">
+            A JSON Object holding data about user along with an authorization
+            token.<br />
+            { "user": { <br />
+            "_id": "619b8d1b0626f261acd6109e", <br />
+            "username": "User1", <br />
+            "password":
+            "$2b$10$hSngLldMMCCNC1B4VJ5/7.T7UPVSnsg519YAo1ClTI1btWuhMyORK",
+            <br />
+            "email": "user1@xyz.com", <br />
+            "birthdate": "1985-05-31T00:00:00.000Z", <br />
+            "__v": 0 <br />
+            }, <br />
+            "token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTliOGQxYjA2MjZmMjYxYWNkNjEw
+            <br />
+            OWUiLCJ1c2VybmFtZSI6IlVzZXIxIiwicGFzc3dvcmQiOiIkMmIkMTAkaFNuZ0xsZE1NQ0NOQzF
+            <br />
+            CNFZKNS83LlQ3VVBWU25zZzUxOVlBbzFDbFRJMWJ0V3VoTXlPUksiLCJlbWFpbCI6InVzZXIxQHh
+            <br />
+            5ei5jb20iLCJiaXJ0aGRhdGUiOiIxOTg1LTA1LTMxVDAwOjAwOjAwLjAwMFoiLCJmYXZvcml0ZU1
+            <br />
+            vdmllcyI6WyI2MTkyNjhmNWVjNzkyOGI3ZGJiZDA4NmMiLCI2MTkyNjhmNWVjNzkyOGI3ZGJiZDA
+            <br />
+            4NmUiXSwiX192IjowLCJpYXQiOjE2MzgyNjM5NzksImV4cCI6MTYzODg2ODc3OSwic3ViIjoiVXN
+            <br />
+            lcjEifQ.jtWezMUHaJFmCbC3IZJCDzh05eCT6tsz4pzN-9T6Ujg" <br />
+            }
+          </td>
         </tr>
         <tr>
           <td class="col1">Return a list of ALL movies to the user</td>

@@ -4,19 +4,15 @@ import passport from 'passport';
 import '../js/passport.js';
 
 const movie_Router = express.Router();
-
+// passport.authenticate('jwt', { session: false }),
 // request to return a list of all movies
-movie_Router.get(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  (req, res, next) => {
-    Movie.find()
-      .then(movies => {
-        res.json(movies);
-      })
-      .catch(next);
-  }
-);
+movie_Router.get('/', (req, res, next) => {
+  Movie.find()
+    .then(movies => {
+      res.json(movies);
+    })
+    .catch(next);
+});
 
 // request to return details of a single movie by its title
 movie_Router.get(

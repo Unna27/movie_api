@@ -16,7 +16,7 @@ const userValidationRules = () => {
     check('email', 'E-mail does not appear to be valid').isEmail(),
     check('birthdate', 'Date of Birth must be a valid date.')
       .isDate()
-      .optional({ nullable: true })
+      .optional({ nullable: true, checkFalsy: true })
   ];
 };
 
@@ -38,7 +38,7 @@ const userUpdateValidationRules = () => {
       .optional({ nullable: true }),
     check('birthdate', 'Date of Birth must be a valid date.')
       .isDate()
-      .optional({ nullable: true })
+      .optional({ nullable: true, checkFalsy: true })
   ];
 };
 

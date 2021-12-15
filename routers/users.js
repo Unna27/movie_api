@@ -40,13 +40,12 @@ user_Router.put(
   validate,
   passport.authenticate('jwt', { session: false }),
   (req, res, next) => {
-    let hashedPassword = User.hashPassword(req.body.password); // calls hashPwd method in usermodel
     User.findOneAndUpdate(
       { username: req.params.username },
       {
         $set: {
           username: req.body.username,
-          password: hashedPassword,
+          password: req.body.password,
           email: req.body.email,
           birthdate: req.body.birthdate
         }

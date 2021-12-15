@@ -40,12 +40,13 @@ user_Router.put(
   validate,
   passport.authenticate('jwt', { session: false }),
   (req, res, next) => {
+    let hashedPassword = User.hashPassword(req.body.password); // calls hashPwd method in usermodel
     User.findOneAndUpdate(
       { username: req.params.username },
       {
         $set: {
           username: req.body.username,
-          password: req.body.password,
+          password: hashedPassword,
           email: req.body.email,
           birthdate: req.body.birthdate
         }
@@ -60,7 +61,7 @@ user_Router.put(
           console.log('no user found to update.');
           res
             .status(400)
-            .send(req.body.username + ' not found in database to update.');
+            .send(req.params.username + ' not found in database to update.');
         }
       })
       .catch(next);

@@ -107,9 +107,7 @@ user_Router.delete(
     )
       .then(updatedUser => {
         console.log(updatedUser);
-        res
-          .status(200)
-          .send('Favorite movie has been removed from the favoritemovieslist.');
+        res.status(200).json(updatedUser);
       })
       .catch(next);
   }

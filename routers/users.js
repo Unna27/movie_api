@@ -55,7 +55,7 @@ user_Router.put(
       .then(updatedUser => {
         if (updatedUser) {
           console.log(updatedUser);
-          res.status(200).send('User details has been updated.');
+          res.status(200).json(updatedUser);
         } else {
           console.log('no user found to update.');
           res
@@ -83,9 +83,7 @@ user_Router.post(
     )
       .then(updatedUser => {
         console.log(updatedUser);
-        res
-          .status(200)
-          .send('Favorite movie has been added to the favoritemovieslist.');
+        res.status(200).json(updatedUser);
       })
       .catch(next);
   }

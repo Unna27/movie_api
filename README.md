@@ -66,7 +66,7 @@ Technical Requirements:
 
 ## Project Status
 
-Project is: _in progress_
+Project is: _completed_
 
 ## Room for Improvement
 

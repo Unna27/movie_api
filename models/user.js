@@ -16,5 +16,12 @@ userSchema.statics.hashPassword = password => {
 userSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password); // use regular fn expression, so that this refers to the object from which this fn is being called, else (arrow exor) it refers to the obj where this function is defined.
 };
-
+/**
+ * Business logic of user Schema
+ * @exports {{  username: String,
+ *   password: String,
+ *   email: String,
+ *   birthdate: Date,
+ *   favoriteMovies: Array}} User
+ */
 export const User = mongoose.model('User', userSchema);

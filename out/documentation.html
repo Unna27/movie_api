@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Movie_API Documentation</title>
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>Documentation</h1>
+    <p>
+      To build the server-side component of a “movies” web application. The web
+      application will provide users with access to information about different
+      movies, directors, and genres. Users will be able to sign up, update their
+      personal information, and create a list of their favorite movies. This is
+      a secure API and hence for every request in the API, except for user
+      registration and login, we need to provide an auathorization bearer token
+      (received after logging) while sending a request in Postman.
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <th class="col1"><strong>Request</strong></th>
+          <th class="col2"><strong>URL</strong></th>
+          <th class="col3"><strong>HTTP Method</strong></th>
+          <th class="col4"><strong>Request body data format</strong></th>
+          <th class="col5"><strong>Response body data format</strong></th>
+        </tr>
+        <tr>
+          <td class="col1">Allow users to login</td>
+          <td class="col2">/login</td>
+          <td class="col3">POST</td>
+          <td class="col4">
+            In Query Params, provide valid username and password
+          </td>
+          <td class="col5">
+            A JSON Object holding data about user along with an authorization
+            token.<br />
+            { "user": { <br />
+            "_id": "619b8d1b0626f261acd6109e", <br />
+            "username": "User1", <br />
+            "password":
+            "$2b$10$hSngLldMMCCNC1B4VJ5/7.T7UPVSnsg519YAo1ClTI1btWuhMyORK",
+            <br />
+            "email": "user1@xyz.com", <br />
+            "birthdate": "1985-05-31T00:00:00.000Z", <br />
+            "__v": 0 <br />
+            }, <br />
+            "token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTliOGQxYjA2MjZmMjYxYWNkNjEw
+            <br />
+            OWUiLCJ1c2VybmFtZSI6IlVzZXIxIiwicGFzc3dvcmQiOiIkMmIkMTAkaFNuZ0xsZE1NQ0NOQzF
+            <br />
+            CNFZKNS83LlQ3VVBWU25zZzUxOVlBbzFDbFRJMWJ0V3VoTXlPUksiLCJlbWFpbCI6InVzZXIxQHh
+            <br />
+            5ei5jb20iLCJiaXJ0aGRhdGUiOiIxOTg1LTA1LTMxVDAwOjAwOjAwLjAwMFoiLCJmYXZvcml0ZU1
+            <br />
+            vdmllcyI6WyI2MTkyNjhmNWVjNzkyOGI3ZGJiZDA4NmMiLCI2MTkyNjhmNWVjNzkyOGI3ZGJiZDA
+            <br />
+            4NmUiXSwiX192IjowLCJpYXQiOjE2MzgyNjM5NzksImV4cCI6MTYzODg2ODc3OSwic3ViIjoiVXN
+            <br />
+            lcjEifQ.jtWezMUHaJFmCbC3IZJCDzh05eCT6tsz4pzN-9T6Ujg" <br />
+            }
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">Return a list of ALL movies to the user</td>
+          <td class="col2">/movies</td>
+          <td class="col3">GET</td>
+          <td class="col4">None</td>
+          <td class="col5">A JSON Object holding data about all the movies</td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Return data about a single movie by title to the user
+          </td>
+          <td class="col2">/movies[title]</td>
+          <td class="col3">GET</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A JSON Object holding data about a single movie, containing title,
+            releaseDate, language, etc..is returned.<br />{ "title": "F9",<br />
+            "releaseDate": "June 25, 2021",<br />
+            "language": "English",<br />
+            }
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Return data about a genre (description) by movie title&nbsp;
+          </td>
+          <td class="col2">/movies[title]/genre</td>
+          <td class="col3">GET</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A text message indicating general description of the movie. (e.g.,
+            &ldquo;Thriller&rdquo;)
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">Return data about a director by name</td>
+          <td class="col2">/directors[name]</td>
+          <td class="col3">GET</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A JSON Object holding data about a director, containing (bio, birth
+            year, death year: <br />
+            { "name": "Justin Lin",<br />
+            "bio": "Justin Lin is a Taiwanese-born American director, producer,
+            and screenwriter.",<br />
+            "birthDate": "1971-10-11",<br />
+            "deathDate": null<br />
+            }
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">Allow new users to register</td>
+          <td class="col2">/users</td>
+          <td class="col3">POST</td>
+          <td class="col4">
+            A JSON object holding data about the user to add, structured
+            like:<br />{ "username": "User1",<br />
+            "password": "pwd_user1",<br />
+            "email": "user1@xyz.com",<br />
+            "birthDate": "1990-07-29",<br />
+            }
+          </td>
+          <td class="col5">
+            A JSON object holding data about the user that was added, including
+            an ID: <br />{ "_id": 1,<br />
+            "username": "User1",<br />
+            "password": "pwd_user1",<br />
+            "email": "user1@xyz.com",<br />
+            "birthDate": "1990-07-29",<br />
+            }
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">Allow users to update their user info (username)</td>
+          <td class="col2">/users/[username]</td>
+          <td class="col3">PUT</td>
+          <td class="col4">
+            { <br />
+            "username": "User1",<br />
+            "password": "pwd_user1",<br />
+            "email": "user1@gmail.com",<br />
+            "birthDate": "1990-07-29",<br />
+            }
+          </td>
+          <td class="col5">
+            A text message indicating the user details has been updated.
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Allow users to add a movie to their list of favorites&nbsp;
+          </td>
+          <td class="col2">/users/[username]/movies/[movieId]</td>
+          <td class="col3">POST</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A text message indicating the favorite movie has been added to the
+            list.
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Allow users to remove a movie from their list of favorites&nbsp;
+          </td>
+          <td class="col2">/users/[username]/movies/[movieId]</td>
+          <td class="col3">DELETE</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A text message indicating the favorite movie has been removed from
+            the list.
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">
+            Allow existing users to deregister (showing only a text that a user
+            email has been removed&mdash;more on this later)
+          </td>
+          <td class="col2">/users[username]</td>
+          <td class="col3">DELETE</td>
+          <td class="col4">None</td>
+          <td class="col5">
+            A text message indicating whether the user details has been removed.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

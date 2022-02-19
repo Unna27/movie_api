@@ -8,7 +8,6 @@ import { Movie } from '../models/movie.js';
 import passport from 'passport';
 import '../js/passport.js';
 
-// request to return details of a director by name
 director_Router.get(
   '/:name',
   passport.authenticate('jwt', { session: false }),
@@ -28,4 +27,8 @@ director_Router.get(
       .catch(next);
   }
 );
+/**
+ *  Director endpoint that checks in the db for specific director name
+ *  @exports director route
+ */
 export { director_Router };

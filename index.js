@@ -1,3 +1,10 @@
+/**
+ * This API has been built using Node.js and Express
+ * Data is stored in Mongo db
+ * Business Logic is modelled using Mongoose
+ * Middleware modules - morgan for logging, bodyParser for handling data in the requests has been used
+ */
+
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
